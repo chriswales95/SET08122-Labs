@@ -9,3 +9,6 @@ hello
 
 # atom files
 *.DS_Store
+
+# emacs
+*.#*
