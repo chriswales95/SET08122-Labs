@@ -1,0 +1,11 @@
+# out files
+*.out
+
+# java
+*.class
+
+# files without extension
+hello
+
+# atom files
+*.DS_Store
