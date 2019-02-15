@@ -32,6 +32,11 @@ int main(){
   traverse (root);
   printf ("\n") ;
 
+  delete(&root, 12);
+  insert(&root, 133);
+  traverse (root);
+  printf ("\n") ;
+
   return 0;
 }
 
@@ -87,5 +92,75 @@ void search(struct binary_tree_node **root, int num, struct binary_tree_node **p
       } else {
         temp = temp -> right_child;
       }
+    }
+  }
+
+  void delete(struct binary_tree_node **root, int num)
+  {
+    int found;
+    struct binary_tree_node *parent, *search_node, *next;
+
+    if(*root == NULL)
+    {
+      printf("Tree is empty\n");
+      return;
+    }
+
+    parent = search_node = NULL;
+    search(root, num, &parent, &search_node, &found);
+
+    if(found == FALSE)
+    {
+      printf("Data not found\n");
+      return;
+    }
+
+    if(search_node -> left_child != NULL && search_node -> right_child != NULL)
+    {
+      parent = search_node;
+      next = search_node -> right_child;
+      while(next -> left_child != NULL)
+      {
+        parent = next;
+        next = next -> left_child;
+      }
+      search_node -> data = next -> data;
+      search_node = next;
+    }
+
+    if(search_node -> left_child == NULL && search_node-> right_child == NULL)
+    {
+      if(parent -> right_child == search_node){
+        parent -> right_child = NULL;
+      }
+      else{
+        parent -> left_child = NULL;
+      }
+      free(search_node);
+      return;
+    }
+
+    if(search_node -> left_child == NULL && search_node -> right_child != NULL)
+    {
+      if (parent -> left_child == search_node){
+        parent -> left_child = search_node -> right_child;
+      }
+      else{
+        parent -> right_child = search_node -> right_child;
+      }
+      free(search_node);
+      return;
+    }
+
+    if(search_node -> left_child != NULL && search_node -> right_child == NULL)
+    {
+      if(parent -> left_child == search_node){
+        parent -> left_child = search_node -> left_child;
+      }
+      else{
+        parent -> right_child = search_node -> left_child;
+      }
+      free(search_node);
+      return;
     }
   }
